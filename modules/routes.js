@@ -16,6 +16,24 @@ module.exports = function(app, passport) {
                 user : req.user // get the user out of session and pass to template
             });
         });
+
+        app.get('/CSC365', isLoggedIn, function(req, res) {
+            res.render('CSC365.pug', {
+                user : req.user // get the user out of session and pass to template
+            });
+        });
+
+        app.get('/jokes', isLoggedIn, function(req, res) {
+            res.render('jokes.pug', {
+                user : req.user // get the user out of session and pass to template
+            });
+        });
+
+        app.get('/holidays', isLoggedIn, function(req, res) {
+            res.render('holidays.pug', {
+                user : req.user // get the user out of session and pass to template
+            });
+        });
     
             // route for logging out
         app.get('/logout', function(req, res) {
