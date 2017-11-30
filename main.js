@@ -10,7 +10,7 @@ let session = require('express-session')
 let flash    = require('connect-flash');
 let passport = require('passport');
 let passportSetting = require(__dirname+'/modules/passport.js');
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
 let routes = require(__dirname+'/modules/routes.js');
 
