@@ -12,11 +12,12 @@ let passport = require('passport');
 let passportSetting = require(__dirname+'/modules/passport.js');
 let mongoose = require('mongoose');
 
+let configAuth = require(__dirname+'/modules/streamConf.js');
 
-let configAuth = require(__dirname+'/modules/auth');
-let twitter = require('ntwitter');
-let streamHandler = require(__dirname+'/modules/streamHandler');
-let Tweet = require(__dirname+'/modules/models/Tweet');
+// let configAuth = require(__dirname+'/modules/auth');
+// let twitter = require('ntwitter');
+// let streamHandler = require(__dirname+'/modules/streamHandler');
+// let Tweet = require(__dirname+'/modules/models/Tweet');
 
 
 let routes = require(__dirname+'/modules/routes.js');
@@ -26,7 +27,7 @@ mongoose.connect('mongodb://localhost/twitter', {useMongoClient: true});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.disable('etag');
+//app.disable('etag');
 passportSetting(passport);
 
 // uncomment after placing your favicon in /public
@@ -75,6 +76,7 @@ app.set('port', port);
  * Listen on provided port, on all network interfaces.
  */
 
+routes = routes( app, passport);
 
 
 server.listen(port);
@@ -83,8 +85,7 @@ server.on('listening', onListening);
 
 let io = require('socket.io').listen(server);
 
-routes = routes( app, passport, io );
-
+configAuth.io = io;
 /**
  * Normalize a port into a number, string, or false.
  */

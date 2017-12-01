@@ -1,7 +1,7 @@
 // load all the things we need
-let LocalStrategy    = require('passport-local').Strategy;
+let LocalStrategy = require('passport-local').Strategy;
 let FacebookStrategy = require('passport-facebook').Strategy;
-let TwitterStrategy  = require('passport-twitter').Strategy;
+let TwitterStrategy = require('passport-twitter').Strategy;
 
 // load up the user model
 let User = require('./models/user.js');
@@ -9,16 +9,16 @@ let User = require('./models/user.js');
 // load the auth variables
 let configAuth = require('./auth');
 
-module.exports = function(passport) {
+module.exports = function (passport) {
 
     // used to serialize the user for the session
-    passport.serializeUser(function(user, done) {
+    passport.serializeUser(function (user, done) {
         done(null, user.id);
     });
 
     // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
+    passport.deserializeUser(function (id, done) {
+        User.findById(id, function (err, user) {
             done(err, user);
         });
     });
@@ -32,48 +32,51 @@ module.exports = function(passport) {
     // =========================================================================
     passport.use(new TwitterStrategy({
 
-        consumerKey     : configAuth.twitterAuth.consumerKey,
-        consumerSecret  : configAuth.twitterAuth.consumerSecret,
-        callbackURL     : configAuth.twitterAuth.callbackURL
+            consumerKey: configAuth.twitterAuth.consumerKey,
+            consumerSecret: configAuth.twitterAuth.consumerSecret,
+            callbackURL: configAuth.twitterAuth.callbackURL
 
-    },
-    function(token, tokenSecret, profile, done) {
-    // make the code asynchronous
-    // User.findOne won't fire until we have all our data back from Twitter
-        process.nextTick(function() {
+        },
+        function (token, tokenSecret, profile, done) {
+            // make the code asynchronous
+            // User.findOne won't fire until we have all our data back from Twitter
 
-            User.findOne({ 'twitter.id' : profile.id }, function(err, user) {
+            process.nextTick(function () {
 
-                // if there is an error, stop everything and return that
-                // ie an error connecting to the database
-                if (err)
-                    return done(err);
+                User.findOne({
+                    'twitter.id': profile.id
+                }, function (err, user) {
 
-                // if the user is found then log them in
-                if (user) {
-                    return done(null, user); // user found, return that user
-                } else {
-                    // if there is no user, create them
-                    let newUser                 = new User();
+                    // if there is an error, stop everything and return that
+                    // ie an error connecting to the database
+                    if (err)
+                        return done(err);
 
-                    // set all of the user data that we need
-                    newUser.twitter.id          = profile.id;
-                    newUser.twitter.token       = token;
-                    newUser.twitter.tokenSecret       = tokenSecret;
-                    newUser.twitter.username    = profile.username;
-                    newUser.twitter.displayName = profile.displayName;
+                    // if the user is found then log them in
+                    if (user) {
+                        return done(null, user); // user found, return that user
+                    } else {
+                        // if there is no user, create them
+                        let newUser = new User();
 
-                    // save our user into the database
-                    newUser.save(function(err) {
-                        if (err)
-                            throw err;
-                        return done(null, newUser);
-                    });
-                }
+                        // set all of the user data that we need
+                        newUser.twitter.id = profile.id;
+                        newUser.twitter.token = token;
+                        newUser.twitter.tokenSecret = tokenSecret;
+                        newUser.twitter.username = profile.username;
+                        newUser.twitter.displayName = profile.displayName;
+
+                        // save our user into the database
+                        newUser.save(function (err) {
+                            if (err)
+                                throw err;
+                            return done(null, newUser);
+                        });
+                    }
+                });
+
             });
 
-    });
-
-    }));
+        }));
 
 };
