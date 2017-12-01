@@ -1,8 +1,67 @@
 body {
-  padding: 50px;
+  /* padding: 50px; */
+  background-color: rgb(75, 13, 175);
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+.container{
+  
+}
+.mesege-block {
+  width: auto;
+  background-color: white;
+  padding: 15px;
+  min-height: 50px;
+  height: auto;
+  margin: 10px 10px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.mesege-block .img-block {
+  position: relative;
+  padding: 10px;
+  margin: 0;
+  /* left: 0; */
+  float: left;
+}
+.mesege-block .img-block .img-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 0 auto;
+  position: relative;
+  display: block;
+}
+.mesege-block .txt-block {
+  position: relative;
+  padding: 10px;
+  height: auto;
+  left: 0px;
+  width: auto;
+}
+.mesege-block .txt-block .username {
+  position: relative;
+  float: left;
+  margin: 0;
+  font-family: sans-serif;
+  color: #68d7d3;
+}
+.mesege-block .txt-block .mail {
+  font-family: sans-serif;
+  color: darkgray;
+  margin-left: 5px;
+}
+.mesege-block .txt-block .txt-container {
+  position: relative;
+}
+.mesege-block .txt-block .txt-container .user-meseges {
+  margin: 0;
+  padding-top: 10px;
+  font-family: sans-serif;
+  font-size: 15px;
+  color: dimgray;
+  width: 100%;
 }

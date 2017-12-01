@@ -30,7 +30,7 @@ module.exports = function (app, passport) {
 
         Tweet.getTweets(0, 0, function (tweets, pages) {
 
-            console.log(tweets);
+            //console.log(tweets);
 
             res.render('CSC365.pug', {
                 //markup: markup, // Pass rendered react markup
