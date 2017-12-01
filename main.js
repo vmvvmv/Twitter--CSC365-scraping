@@ -12,6 +12,13 @@ let passport = require('passport');
 let passportSetting = require(__dirname+'/modules/passport.js');
 let mongoose = require('mongoose');
 
+
+let configAuth = require(__dirname+'/modules/auth');
+let twitter = require('ntwitter');
+let streamHandler = require(__dirname+'/modules/streamHandler');
+let Tweet = require(__dirname+'/modules/models/Tweet');
+
+
 let routes = require(__dirname+'/modules/routes.js');
 
 let app = express();
@@ -19,6 +26,7 @@ mongoose.connect('mongodb://localhost/twitter', {useMongoClient: true});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.disable('etag');
 passportSetting(passport);
 
 // uncomment after placing your favicon in /public
@@ -48,26 +56,9 @@ app.use(flash());
 
 app.use(express.static(path.join(__dirname, 'resources')));
 
-routes = routes( app, passport );
 
+let server = http.createServer(app);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  let err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
 
 /**
  * Get port from environment and store in Express.
@@ -80,15 +71,19 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-let server = http.createServer(app);
-
 /**
  * Listen on provided port, on all network interfaces.
  */
 
+
+
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+let io = require('socket.io').listen(server);
+
+routes = routes( app, passport, io );
 
 /**
  * Normalize a port into a number, string, or false.

@@ -1,10 +1,10 @@
 // app/models/user.js
 // load the things we need
-var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt-nodejs');
+let mongoose = require('mongoose');
+let bcrypt   = require('bcrypt-nodejs');
 
 // define the schema for our user model
-var userSchema = mongoose.Schema({
+let userSchema = mongoose.Schema({
 
     local            : {
         email        : String,
@@ -19,6 +19,7 @@ var userSchema = mongoose.Schema({
     twitter          : {
         id           : String,
         token        : String,
+        tokenSecret: String,
         displayName  : String,
         username     : String
     },
@@ -39,7 +40,7 @@ userSchema.methods.validPassword = function(password) {
 
 // this method hashes the password and sets the users password
 userSchema.methods.hashPassword = function(password) {
-    var user = this;
+    let user = this;
 
     // hash the password
     bcrypt.hash(password, null, null, function(err, hash) {

@@ -1,13 +1,13 @@
 // load all the things we need
-var LocalStrategy    = require('passport-local').Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
-var TwitterStrategy  = require('passport-twitter').Strategy;
+let LocalStrategy    = require('passport-local').Strategy;
+let FacebookStrategy = require('passport-facebook').Strategy;
+let TwitterStrategy  = require('passport-twitter').Strategy;
 
 // load up the user model
-var User = require('./models/user.js');
+let User = require('./models/user.js');
 
 // load the auth variables
-var configAuth = require('./auth');
+let configAuth = require('./auth');
 
 module.exports = function(passport) {
 
@@ -54,11 +54,12 @@ module.exports = function(passport) {
                     return done(null, user); // user found, return that user
                 } else {
                     // if there is no user, create them
-                    var newUser                 = new User();
+                    let newUser                 = new User();
 
                     // set all of the user data that we need
                     newUser.twitter.id          = profile.id;
                     newUser.twitter.token       = token;
+                    newUser.twitter.tokenSecret       = tokenSecret;
                     newUser.twitter.username    = profile.username;
                     newUser.twitter.displayName = profile.displayName;
 

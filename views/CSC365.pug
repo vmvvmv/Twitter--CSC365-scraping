@@ -10,4 +10,6 @@ html(lang='en')
   body
     include navbar.pug
     .container
-      h3 tweets here
+      h3 #{user.twitter.token}
+        br 
+        |#{user.twitter.tokenSecret}
