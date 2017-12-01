@@ -20,7 +20,7 @@ schema.statics.getTweets = function (page, skip, callback) {
     // Query the db, using skip and limit to achieve page chunks
     Tweet.find({}, 'twid active author avatar body date screenname', {
         skip: start,
-        limit: 10
+        //limit: 10
     }).sort({
         date: 'desc'
     }).exec(function (err, docs) {

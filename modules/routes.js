@@ -30,11 +30,11 @@ module.exports = function (app, passport) {
 
         Tweet.getTweets(0, 0, function (tweets, pages) {
 
-            //console.log(JSON.stringify(tweets));
+            console.log(tweets);
 
             res.render('CSC365.pug', {
                 //markup: markup, // Pass rendered react markup
-                state: JSON.stringify(tweets) // Pass current state to client side
+                state: tweets// Pass current state to client side
             });
 
         });
