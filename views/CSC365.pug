@@ -20,4 +20,5 @@ html(lang='en')
             span.mail @#{tweet.screenname}
             .txt-container
               p.user-meseges #{tweet.body}
-
+              if tweet.youtube !== ''
+                #{tweet.youtube}

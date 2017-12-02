@@ -23,6 +23,17 @@ schema.pre('save', function (next) {
     });
 }) 
 
+function getId(url) {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+
+    if (match && match[2].length == 11) {
+        return match[2];
+    } else {
+        return 'error';
+    }
+}
+
 // Create a static getTweets method to return tweet data from the db
 schema.statics.getTweets = function (page, skip, callback) {
 
@@ -42,11 +53,17 @@ schema.statics.getTweets = function (page, skip, callback) {
             tweets = docs; // We got tweets
             tweets.forEach(function (tweet) {
                 
-            //     tweet.body.replace('(?:https?://)?(?:www.)?(?:youtube.com|youtu.be)/(?:watch\?)?v=([^\s]+)',
-            //     "iframe(width='560', height='315', src='$&', frameborder='0', allowfullscreen=''"
-                
-            // );
+                //tweet.body +='https://www.youtube.com/watch?v=SBDYYGER5iM';
 
+                let videoId = getId(tweet.body);
+
+                //console.log(videoId);
+                let iframeMarkup = '';
+                if(videoId!=='error')
+                    //iframeMarkup = 'iframe(width="560", height="315", src="//www.youtube.com/embed/' + videoId + '", frameborder="0", allowfullscreen="")';
+                    iframeMarkup = '<iframe width="560" height="315" src="//www.youtube.com/embed/' 
+                    + videoId + '" frameborder="0" allowfullscreen></iframe>';
+                tweet.youtube = iframeMarkup;
                 tweet.active = true; // Set them to active
             });
         }
