@@ -14,12 +14,6 @@ let mongoose = require('mongoose');
 
 let configAuth = require(__dirname+'/modules/streamConf.js');
 
-// let configAuth = require(__dirname+'/modules/auth');
-// let twitter = require('ntwitter');
-// let streamHandler = require(__dirname+'/modules/streamHandler');
-// let Tweet = require(__dirname+'/modules/models/Tweet');
-
-
 let routes = require(__dirname+'/modules/routes.js');
 
 let app = express();

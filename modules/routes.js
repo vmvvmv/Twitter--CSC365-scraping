@@ -5,7 +5,7 @@ let streamConf = require('./streamConf');
 let twitter = require('twit')
 
 let streamHandler = require('./streamHandler');
-let Tweet = require('./models/Tweet');
+let Tweet = require('./models/tweet');
 
 module.exports = function (app, passport) {
 
