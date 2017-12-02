@@ -41,6 +41,12 @@ schema.statics.getTweets = function (page, skip, callback) {
         if (!err) {
             tweets = docs; // We got tweets
             tweets.forEach(function (tweet) {
+                
+            //     tweet.body.replace('(?:https?://)?(?:www.)?(?:youtube.com|youtu.be)/(?:watch\?)?v=([^\s]+)',
+            //     "iframe(width='560', height='315', src='$&', frameborder='0', allowfullscreen=''"
+                
+            // );
+
                 tweet.active = true; // Set them to active
             });
         }

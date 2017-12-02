@@ -12,7 +12,7 @@ let passport = require('passport');
 let passportSetting = require(__dirname+'/modules/passport.js');
 let mongoose = require('mongoose');
 
-let configAuth = require(__dirname+'/modules/streamConf.js');
+let streamConf = require(__dirname+'/modules/streamConf.js');
 
 let routes = require(__dirname+'/modules/routes.js');
 
@@ -79,7 +79,7 @@ server.on('listening', onListening);
 
 let io = require('socket.io').listen(server);
 
-configAuth.io = io;
+streamConf.io = io;
 /**
  * Normalize a port into a number, string, or false.
  */
