@@ -11,6 +11,18 @@ let schema = new mongoose.Schema({
     screenname: String
 });
 
+schema.pre('save', function (next) {
+    let self = this;
+    Tweet.find({twid : self.twid}, function (err, docs) {
+        if (!docs.length){
+            next();
+        }else{                
+            //console.log('twid exist: ',self.twid);
+            //next(new Error("User exists!"));
+        }
+    });
+}) 
+
 // Create a static getTweets method to return tweet data from the db
 schema.statics.getTweets = function (page, skip, callback) {
 
