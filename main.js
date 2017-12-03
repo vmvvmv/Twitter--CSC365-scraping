@@ -17,7 +17,7 @@ let streamConf = require(__dirname+'/modules/streamConf.js');
 let routes = require(__dirname+'/modules/routes.js');
 
 let app = express();
-mongoose.connect('mongodb://localhost/twitter', {useMongoClient: true});
+mongoose.connect('mongodb://test:test@ds129706.mlab.com:29706/twiter', {useMongoClient: true});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -38,8 +38,8 @@ app.use(session({
   store: new (require('express-sessions'))({
     storage: 'mongodb',
     instance: mongoose, // optional 
-    host: 'localhost', // optional 
-    port: 27017, // optional 
+    host: 'mlab.com', // optional 
+    port: 29706, // optional 
     db: 'twitter', // optional 
     collection: 'sessions', // optional 
     expire: 86400 // optional 
