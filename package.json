@@ -24,5 +24,8 @@
     "serve-favicon": "~2.3.2",
     "socket.io": "^2.0.4",
     "twit": "^2.2.9"
+  },
+  "devDependencies": {
+    "eslint": "^4.12.1"
   }
 }

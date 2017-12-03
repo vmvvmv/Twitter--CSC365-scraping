@@ -1,12 +1,14 @@
+'use strict';
+
 let express = require('express');
 let path = require('path');
-let favicon = require('serve-favicon');
+//let favicon = require('serve-favicon');
 let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
-let debug = require('debug')('twiter-scraping:server');
+//let debug = require('debug')('twiter-scraping:server');
 let http = require('http');
-let session = require('express-session')
+let session = require('express-session');
 let flash    = require('connect-flash');
 let passport = require('passport');
 let passportSetting = require(__dirname+'/modules/passport.js');
@@ -14,7 +16,7 @@ let mongoose = require('mongoose');
 
 let streamConf = require(__dirname+'/modules/streamConf.js');
 
-let routes = require(__dirname+'/modules/routes.js');
+//let routes = require(__dirname+'/modules/routes.js');
 
 let app = express();
 mongoose.connect('mongodb://test:test@ds129706.mlab.com:29706/twiter', {useMongoClient: true});
@@ -32,18 +34,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 // required for passport
 app.use(session({
-  secret: 'ilovescotchscotchyscotchscotch',
-  resave: true,
-  saveUninitialized: true,
-  store: new (require('express-sessions'))({
-    storage: 'mongodb',
-    instance: mongoose, // optional 
-    host: 'mlab.com', // optional 
-    port: 29706, // optional 
-    db: 'twitter', // optional 
-    collection: 'sessions', // optional 
-    expire: 86400 // optional 
-})
+	secret: 'ilovescotchscotchyscotchscotch',
+	resave: true,
+	saveUninitialized: true,
+	store: new (require('express-sessions'))({
+		storage: 'mongodb',
+		instance: mongoose, // optional 
+		host: 'mlab.com', // optional 
+		port: 29706, // optional 
+		db: 'twitter', // optional 
+		collection: 'sessions', // optional 
+		expire: 86400 // optional 
+	})
 })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
@@ -70,8 +72,7 @@ app.set('port', port);
  * Listen on provided port, on all network interfaces.
  */
 
-routes = routes( app, passport);
-
+require(__dirname+'/modules/routes.js')( app, passport);
 
 server.listen(port);
 server.on('error', onError);
@@ -85,19 +86,19 @@ streamConf.io = io;
  */
 
 function normalizePort(val) {
-  let port = parseInt(val, 10);
+	let nport = parseInt(val, 10);
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+	if (isNaN(nport)) {
+		// named pipe
+		return val;
+	}
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+	if (nport >= 0) {
+		// port number
+		return nport;
+	}
 
-  return false;
+	return false;
 }
 
 /**
@@ -105,27 +106,27 @@ function normalizePort(val) {
  */
 
 function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+	if (error.syscall !== 'listen') {
+		throw error;
+	}
 
-  let bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+	let bind = typeof port === 'string'
+		? 'Pipe ' + port
+		: 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
+	// handle specific listen errors with friendly messages
+	switch (error.code) {
+	case 'EACCES':
+		console.error(bind + ' requires elevated privileges');
+		process.exit(1);
+		break;
+	case 'EADDRINUSE':
+		console.error(bind + ' is already in use');
+		process.exit(1);
+		break;
+	default:
+		throw error;
+	}
 }
 
 /**
@@ -133,12 +134,12 @@ function onError(error) {
  */
 
 function onListening() {
-  let addr = server.address();
-  let bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  //debug('Listening on ' + bind);
-  console.log('Listening on ' + bind);
+	let addr = server.address();
+	let bind = typeof addr === 'string'
+		? 'pipe ' + addr
+		: 'port ' + addr.port;
+	//debug('Listening on ' + bind);
+	console.log('Listening on ' + bind);
 }
 
 
